@@ -70,4 +70,16 @@ describe("player", () => {
     expect(_sut.mana).toBe(1);
   });
 
+  it("Deve lançar excessão quando o player jogar uma carta que custa mais mana do que ele tem", () => {
+    _sut.mao = [1,2,3];
+    _sut.mana = 2;
+    expect(() => _sut.atacar(3)).toThrow();
+  });
+
+  it("Deve retornar o valor do dano do ataque", () => {
+    _sut.mao = [1,2,3];
+    _sut.mana = 4;
+    expect(_sut.atacar(3)).toBe(3);
+  });
+
 });

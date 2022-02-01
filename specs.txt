@@ -1,0 +1,14 @@
+Quando o jogador nao tiver nenhuma carta
+Quando o jogador nao tiver nenhuma carta disponivel para o ataque
+Quando o jogador decidir passar a vez
+
+Aplicar o turno para o jogador numero 2
+
+Criar interface para o jogador (Console)
+
+Nome Jogador 1: 
+Nome jogador 2:
+
+"Com qual carta voce quer atacar [2,5,6] --- Mana 3/6":
+
+"jogador vencedor: "

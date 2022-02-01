@@ -19,15 +19,21 @@ export class Player {
     if (!this.mao.some(x => x === carta)) {
       throw new Error("Você escolheu uma carta não disponível para o ataque!");
     }
+    if (carta > this.mana) {
+      throw new Error("Você não tem mana para jogar esta carta!");
+    }
     this.mao.splice(this.mao.indexOf(carta), 1);
     this.mana -= carta;
+    
+    return carta;
   }
 
   comprarCarta() {
-    const [p, ...rest] = this.deck;
-    this.mao.push(p);
+    const [primeiraCarta, ...rest] = this.deck;
+    this.mao.push(primeiraCarta);
     this.deck = rest;
   }
+
 
   embaralharCartas() {
     for (let index = 0; index < 100; index++) {
