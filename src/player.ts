@@ -16,7 +16,7 @@ export class Player {
   }
 
   atacar(carta: number) {
-    if (!this.mao.some(x => x === carta)) {
+    if (!this.mao.some((x) => x === carta)) {
       throw new Error("Você escolheu uma carta não disponível para o ataque!");
     }
     if (carta > this.mana) {
@@ -24,7 +24,7 @@ export class Player {
     }
     this.mao.splice(this.mao.indexOf(carta), 1);
     this.mana -= carta;
-    
+
     return carta;
   }
 
@@ -34,10 +34,9 @@ export class Player {
     this.deck = rest;
   }
 
-
   embaralharCartas() {
     for (let index = 0; index < 100; index++) {
-      this.deck.sort(() => Math.random() > 0.5 ? 1 : -1);
+      this.deck.sort(() => (Math.random() > 0.5 ? 1 : -1));
     }
   }
-};
+}

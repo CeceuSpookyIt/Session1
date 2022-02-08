@@ -14,13 +14,12 @@ describe("Game", () => {
   beforeEach(() => {
     const p1 = new Player("Player 1");
     const p2 = new Player("Player 2");
-    // const iu : InterfaceUsuario;
 
     j1EC = jest.spyOn(p1, "embaralharCartas");
     j2EC = jest.spyOn(p2, "embaralharCartas");
 
     j1CC = jest.spyOn(p1, "comprarCarta");
-    // j2CC = jest.spyOn(p2, 'comprarCarta');
+
     selecionarCarta = jest.fn().mockReturnValue(3);
     interfaceUsuario = {
       selecionarCarta,
