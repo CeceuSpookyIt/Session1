@@ -1,10 +1,14 @@
+import { IInterfaceUsuario } from "./IInterfaceUsuario";
 import { Player } from "./player";
 export class Game {
   jogador1: Player;
   jogador2: Player;
-  constructor(jogador1: Player, jogador2: Player) {
+  Vencedor: Player | undefined;
+  iu: IInterfaceUsuario;
+  constructor(jogador1: Player, jogador2: Player, iu: IInterfaceUsuario) {
     this.jogador1 = jogador1;
     this.jogador2 = jogador2;
+    this.iu = iu;
 
     jogador1.embaralharCartas();
     jogador2.embaralharCartas();
@@ -15,20 +19,40 @@ export class Game {
     }
   }
 
-  rodarTurno() {
-    if (this.jogador1.manaSlot < 10) {
-      this.jogador1.manaSlot++;
+  rodarTurno(jogadorAtacante: Player, jogadorDefensor: Player) {
+    if (jogadorAtacante.manaSlot < 10) {
+      jogadorAtacante.manaSlot++;
     }
-    this.jogador1.mana = this.jogador1.manaSlot;
-    this.jogador1.comprarCarta();
-    while (this.jogador1.mana > 0) {
-      const ataquej1 = 3; //abre opcoes para o jogador escolher o ataque dele
-      const dano = this.jogador1.atacar(ataquej1);
-
-      this.jogador2.vida -= dano;
-      if (this.jogador2.vida <= 0) {
-        return this.jogador1.nome;
+    jogadorAtacante.mana = jogadorAtacante.manaSlot;
+    jogadorAtacante.comprarCarta();
+    while (
+      jogadorAtacante.mao.length > 0 &&
+      jogadorAtacante.mao.some((carta) => carta <= jogadorAtacante.mana)
+    ) {
+      let ataque: number = this.iu.selecionarCarta();
+      if (ataque === -1) {
+        break;
+      }
+      const dano = jogadorAtacante.atacar(ataque);
+      jogadorDefensor.vida -= dano;
+      if (jogadorDefensor.vida <= 0) {
+        this.Vencedor = jogadorAtacante;
       }
     }
+  }
+
+  iniciarJogo() {
+    let jogadorAtacante: Player;
+    let jogadorDefensor: Player;
+    if (Math.random() < 0.5) {
+      jogadorAtacante = this.jogador1;
+      jogadorDefensor = this.jogador2;
+    } else {
+      jogadorAtacante = this.jogador2;
+      jogadorDefensor = this.jogador1;
+    }
+    this.rodarTurno(jogadorAtacante, jogadorDefensor);
+    [jogadorAtacante, jogadorDefensor] = [jogadorDefensor, jogadorAtacante];
+    this.rodarTurno(jogadorAtacante, jogadorDefensor);
   }
 }
