@@ -119,8 +119,7 @@ describe("Game", () => {
       .mockReturnValueOnce(3)
       .mockReturnValueOnce(0)
       .mockReturnValueOnce(3)
-      .mockReturnValueOnce(0)
-      .mockReturnValueOnce(5);
+      .mockReturnValueOnce(0);
     j1Atacar.mockImplementation((x) => {
       _sut.jogador1.mana -= x;
       _sut.jogador1.mao.splice(_sut.jogador1.mao.indexOf(x), 1);
